@@ -29,12 +29,20 @@ docker-compose up
 1. Create course
 2. Create lead
 3. Update Course
+
+### Have added basic RBAC (role based access control) mechanism for the folloeing actions. Only an instructor who possesses the Authorization header in the HTTP request will be valid to execute the following.
 4. Add comment to lead
 5. Update lead status
-6. Get leas info
+6. Get lead info
+
+### The HTTP header authorization holds these values
+* user - admin
+* pwd - instructor
+
+### An improvement upon this can be token based auth, like JWT which uses hashing.
 
 ## Tech Stack
 * Docker
 * Nodejs
-* Express.js
+* Express.js framework
 * MySQL
