@@ -1,0 +1,9 @@
+# dependencies
+app/node_modules
+
+#props
+.env
+app/.env
+
+build
+npm-debug.log
