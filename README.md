@@ -21,6 +21,10 @@ NODE_DOCKER_PORT=8080
 ```bash
 docker-compose up
 ```
+## DB stucture
+Course table : <br>![course](./course.png)
+
+Leads table : <br>![leads](./leads.png)
 
 
 ## APIs
