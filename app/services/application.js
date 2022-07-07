@@ -3,7 +3,7 @@ const connection = require("../helper/db");
 var leadStatus = ["Accept", "Reject", "Waitlist"];
 
 function emptyOrRows(rows) {
-  if (rows.length===0) {
+  if (rows.length === 0) {
     console.log("No records found");
     return "No records found";
   }
@@ -46,9 +46,30 @@ async function createCourse(course) {
 }
 
 async function updateCourse(id, course) {
+  //getting existing values in row
+  const curr = await connection.query(
+    `SELECT name,DATE_FORMAT(start_date, '%Y-%m-%d') as start_date,max_seats from course 
+    WHERE id=${id}`
+  );
+  var name, date, max_seats;
+  name = curr[0]["name"];
+  date = curr[0]["start_date"];
+  max_seats = curr[0]["max_seats"];
+
+  // if new values found in req body, replace the variables
+  if (course.name!==undefined){
+    name=course.name;
+  }
+  if (course.start_date!==undefined){
+    date=course.start_date;
+  }
+  if (course.max_seats!==undefined){
+    max_seats=course.max_seats;
+  }
+
   const result = await connection.query(
     `UPDATE course 
-    SET name="${course.name}", start_date="${course.start_date}", max_seats=${course.max_seats} 
+    SET name="${name}", start_date="${date}", max_seats=${max_seats} 
     WHERE id=${id}`
   );
 
@@ -63,6 +84,7 @@ async function updateCourse(id, course) {
 
 async function createLead(user) {
   var pno = user.phone;
+  // standard regex for Indian mobile phones
   const regex = /^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[0]?)?[789]\d{9}|(\d[ -]?){10}\d$/;
   if (!regex.test(pno)) {
     return "Invalid phone number";
