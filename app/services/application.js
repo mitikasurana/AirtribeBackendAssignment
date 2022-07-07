@@ -2,6 +2,26 @@ const connection = require("../helper/db");
 
 var leadStatus = ["Accept", "Reject", "Waitlist"];
 
+function instructorAuth(req, res) {
+  var authheader = req.headers.authorization;
+  console.log(req.headers);
+
+  if (!authheader) {
+    console.log('No authentication provided');
+    return false;
+  }
+
+  var auth = new Buffer.from(authheader.split(' ')[1], 'base64').toString().split(':');
+  var user = auth[0];
+  var pass = auth[1];
+
+  if (!(user == 'admin' && pass == 'instructor')) {
+    console.log('Only instructors are authorized for this action');
+    return false;
+  }
+  return true;
+}
+
 function emptyOrRows(rows) {
   if (rows.length === 0) {
     console.log("No records found");
@@ -57,14 +77,14 @@ async function updateCourse(id, course) {
   max_seats = curr[0]["max_seats"];
 
   // if new values found in req body, replace the variables
-  if (course.name!==undefined){
-    name=course.name;
+  if (course.name !== undefined) {
+    name = course.name;
   }
-  if (course.start_date!==undefined){
-    date=course.start_date;
+  if (course.start_date !== undefined) {
+    date = course.start_date;
   }
-  if (course.max_seats!==undefined){
-    max_seats=course.max_seats;
+  if (course.max_seats !== undefined) {
+    max_seats = course.max_seats;
   }
 
   const result = await connection.query(
@@ -156,6 +176,7 @@ async function updateLeadComment(id, comment) {
 }
 
 module.exports = {
+  instructorAuth,
   tablesExist,
   createCourse,
   createLead,
