@@ -50,7 +50,7 @@ router.put('/lead/:id', async function(req, res, next) {
 // Search lead info
 router.post('/search/', async function(req,res,next){
     try{
-        res.json(await app.searchLead(req.params));
+        res.json(await app.searchLead(req.body));
     }
     catch (err) {
         console.error(`Error while fetching lead `, err.message);
