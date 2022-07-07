@@ -1,7 +1,6 @@
 ## Airtribe-Backend Assignment
-Problem statement 
+[!Problem statement] (https://airtribe.notion.site/Internship-Assignment-Backend-521e1797124c4b198cb58d724fc9ab15)
 This is an api based application for courses and lead generation in Airtribe and provides 6 actions.
-Postman collection : (https://app.getpostman.com/run-collection/)
 
 ## Deployment
 
