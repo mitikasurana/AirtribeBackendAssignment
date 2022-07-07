@@ -3,8 +3,9 @@ const connection = require("../helper/db");
 var leadStatus = ["Accept", "Reject", "Waitlist"];
 
 function emptyOrRows(rows) {
-  if (!rows) {
-    return [];
+  if (rows.length===0) {
+    console.log("No records found");
+    return "No records found";
   }
   return rows;
 }
@@ -110,7 +111,6 @@ async function searchLead(lead) {
     `SELECT * from leads 
      WHERE name="${name}" or email="${email}"`
   );
-
   const data = emptyOrRows(result);
 
   return { data };
